@@ -16,9 +16,9 @@ using Microsoft.Extensions.DependencyInjection;
                     connectionString,
                     b => b.MigrationsAssembly(typeof(ServiceCollectionExtensions).Assembly.FullName) 
                 ));
+            services.AddScoped<ITaskRepository, TaskRepository>();
 
-
-            return services;
+        return services;
         }
     }
 

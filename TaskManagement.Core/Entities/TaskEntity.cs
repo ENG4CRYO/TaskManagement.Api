@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 
-public class Task
+public class TaskEntity
 {
     [Key]
     public int Id { get; set; }

@@ -1,0 +1,25 @@
+﻿using Microsoft.EntityFrameworkCore;
+
+public class TaskRepository : ITaskRepository
+{
+    private readonly TaskDbContext _context;
+
+    public TaskRepository(TaskDbContext context)
+    {
+        _context = context;
+    }
+    public async Task AddTaskAsync (TaskEntity newTask) => await _context.Tasks.AddAsync(newTask);
+
+    public async Task DeleteTaskAsync(TaskEntity taskToDelete) => _context.Tasks.Remove(taskToDelete);
+
+    public async Task UpdateTaskAsync(TaskEntity taskToUpdate) => _context.Tasks.Update(taskToUpdate);
+
+    public async Task<List<TaskEntity>> GetAllTasksAsync() => await _context.Tasks.ToListAsync();
+
+    public async Task<TaskEntity?> GetTaskByIdAsync(int taskId) => await _context.Tasks.FindAsync(taskId);
+
+    public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
+
+
+}
+
