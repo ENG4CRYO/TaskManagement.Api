@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
            
             services.AddDbContext<TaskDbContext>(options =>
-                options.UseSqlServer(
+                options.UseNpgsql(
                     connectionString,
                     b => b.MigrationsAssembly(typeof(ServiceCollectionExtensions).Assembly.FullName) 
                 ));
