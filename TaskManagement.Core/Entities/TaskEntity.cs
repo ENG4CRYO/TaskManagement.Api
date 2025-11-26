@@ -10,9 +10,9 @@ public class TaskEntity
     public int Id { get; set; }
     [Required, MinLength(1), MaxLength(50)]
     public string Title { get; set; } = default!;
-    [Required]
+
     public string Description { get; set; } = default!;
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public TaskStatus Status { get; set; }
 }
 
