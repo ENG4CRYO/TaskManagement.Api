@@ -7,8 +7,8 @@
     Task DeleteTaskAsync(TaskEntity taskToDelete);
 
     Task<TaskEntity?> GetTaskByIdAsync(int TaskId);
-    Task<List<TaskEntity>> GetAllTasksAsync();
+    Task<List<TaskEntity>> GetAllTasksAsync(string userId);
 
-    Task SaveChangesAsync();
+    Task SaveChangesAsync( );
 }
 

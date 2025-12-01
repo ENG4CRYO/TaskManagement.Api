@@ -14,5 +14,8 @@ public class TaskEntity
     public string Description { get; set; } = default!;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public TaskStatus Status { get; set; }
+    
+    public string? UserId { get; set; }
+    public ApplicationUser? User { get; set; }  
 }
 

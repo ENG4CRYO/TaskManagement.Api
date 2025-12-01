@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace TaskManagement.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TaskController : Controller
@@ -12,11 +15,17 @@ namespace TaskManagement.Api.Controllers
             _taskService = taskService;
         }
 
-        [HttpGet]
+        [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllTasks()
         {
-            var tasks = await _taskService.GetAllTasksAsync();
+            var userId = User.FindFirst("uid")?.Value;
+
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+            var tasks = await _taskService.GetAllTasksAsync(userId);
             return Ok(tasks);
         }
 
@@ -34,13 +43,25 @@ namespace TaskManagement.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTask([FromBody] CreateTaskDto newTask)
         {
-            var createdTask = await _taskService.AddTaskAsync(newTask);
+            var userId = User.FindFirst("uid")?.Value;
+          
+
+            if (userId == null)
+                return Unauthorized();
+
+            var createdTask = await _taskService.AddTaskAsync(newTask,userId);
             return CreatedAtAction(nameof(GetTaskById), new { id = createdTask.Id }, createdTask);
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateTask(int id, [FromBody] UpdateTaskDto updatedTask)
         {
+            var userId = User.FindFirst("uid")?.Value;
+
+
+            if (userId == null)
+                return Unauthorized();
+
             var result = await _taskService.UpdateTaskAsync(id, updatedTask);
             if (!result)
                 return NotFound();

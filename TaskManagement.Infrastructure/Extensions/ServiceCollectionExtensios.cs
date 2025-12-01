@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,14 +11,14 @@ using Microsoft.Extensions.DependencyInjection;
          
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-           
-            services.AddDbContext<TaskDbContext>(options =>
+        services.AddScoped<ITaskRepository, TaskRepository>();
+
+        services.AddDbContext<TaskDbContext>(options =>
                 options.UseNpgsql(
                     connectionString,
                     b => b.MigrationsAssembly(typeof(ServiceCollectionExtensions).Assembly.FullName) 
                 ));
-            services.AddScoped<ITaskRepository, TaskRepository>();
-
+ 
         return services;
         }
     }

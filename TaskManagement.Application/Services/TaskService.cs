@@ -10,10 +10,10 @@ public class TaskService : ITaskService
         _repo = repo;
         _mapper = mapper;
     }
-    public async Task<GetTaskResponseDto> AddTaskAsync(CreateTaskDto newTask)
+    public async Task<GetTaskResponseDto> AddTaskAsync(CreateTaskDto newTask, string userId)
     {
         var taskEntity = _mapper.Map<TaskEntity>(newTask);
-
+        taskEntity.UserId = userId;
         await _repo.AddTaskAsync(taskEntity);
         await _repo.SaveChangesAsync();
         return _mapper.Map<GetTaskResponseDto>(taskEntity);
@@ -32,9 +32,9 @@ public class TaskService : ITaskService
 
     }
 
-    public async Task<IEnumerable<GetTaskResponseDto>> GetAllTasksAsync()
+    public async Task<IEnumerable<GetTaskResponseDto>> GetAllTasksAsync(string userId)
     {
-        var tasks = await _repo.GetAllTasksAsync();
+        var tasks = await _repo.GetAllTasksAsync(userId);
         return _mapper.Map<IEnumerable<GetTaskResponseDto>>(tasks);
     }
 
