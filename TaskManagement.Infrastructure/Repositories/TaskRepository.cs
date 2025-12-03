@@ -16,7 +16,7 @@ public class TaskRepository : ITaskRepository
 
     public async Task<List<TaskEntity>> GetAllTasksAsync(string userId) => await _context.Tasks.Where(t => t.UserId == userId).ToListAsync();
 
-    public async Task<TaskEntity?> GetTaskByIdAsync(int taskId) => await _context.Tasks.FindAsync(taskId);
+    public async Task<TaskEntity?> GetTaskByIdAsync(int taskId, string userId) => await _context.Tasks.Where(t => t.Id == taskId && t.UserId == userId).FirstOrDefaultAsync();
 
     public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
 

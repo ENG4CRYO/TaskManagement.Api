@@ -19,9 +19,9 @@ public class TaskService : ITaskService
         return _mapper.Map<GetTaskResponseDto>(taskEntity);
     }
 
-    public async Task<bool> DeleteTaskAsync(int taskId)
+    public async Task<bool> DeleteTaskAsync(int taskId, string userId)
     {
-        var taskToDelete = await _repo.GetTaskByIdAsync(taskId);
+        var taskToDelete = await _repo.GetTaskByIdAsync(taskId,userId);
 
         if (taskToDelete == null) return false;
 
@@ -38,16 +38,17 @@ public class TaskService : ITaskService
         return _mapper.Map<IEnumerable<GetTaskResponseDto>>(tasks);
     }
 
-    public async Task<GetTaskResponseDto> GetTaskByIdAsync(int taskId)
+    public async Task<GetTaskResponseDto> GetTaskByIdAsync(int taskId,string userId)
     {
-        var task = await _repo.GetTaskByIdAsync(taskId);
+
+        var task = await _repo.GetTaskByIdAsync(taskId,userId);
         return _mapper.Map<GetTaskResponseDto>(task);
 
     }
 
-    public async Task<bool> UpdateTaskAsync(int taskId, UpdateTaskDto updatedTask)
+    public async Task<bool> UpdateTaskAsync(int taskId, UpdateTaskDto updatedTask, string userId)
     {
-        var exsistTingTask = await _repo.GetTaskByIdAsync(taskId);
+        var exsistTingTask = await _repo.GetTaskByIdAsync(taskId,userId);
 
         if (exsistTingTask == null) return false;
 
