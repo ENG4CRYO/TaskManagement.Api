@@ -46,8 +46,11 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-    app.MapOpenApi();
-    app.MapScalarApiReference();
+
+app.MapOpenApi();
+
+app.MapScalarApiReference(endpointPrefix: "scalar");
+
 
 
 app.UseHttpsRedirection();
