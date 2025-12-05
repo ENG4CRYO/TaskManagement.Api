@@ -6,5 +6,7 @@ public class ApplicationUser : IdentityUser
     public string LastName { get; set; } = default!;
 
     public ICollection<TaskEntity>? Tasks { get; set; } 
+
+    public List<RefreshToken>? RefreshTokens { get; set; }
 }
 
