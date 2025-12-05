@@ -179,7 +179,7 @@ namespace TaskManagement.Application.Services
 
             var userId = principal.Claims.SingleOrDefault(c => c.Type == "uid")?.Value;
             var user = await _userManager.Users
-    .Include(u => u.RefreshToke
+    .Include(u => u.RefreshTokens)
     .SingleOrDefaultAsync(u => u.Id == userId);
 
             if (user == null || user.RefreshTokens == null)
